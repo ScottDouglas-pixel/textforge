@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle, Zap, Loader2 } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 const PLANS = [
   {
@@ -66,6 +67,17 @@ const PLANS = [
 export default function PricingPage() {
   const [loading, setLoading] = useState<string | null>(null);
   const [email, setEmail] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.email) {
+        setEmail(user.email);
+        setIsLoggedIn(true);
+      }
+    });
+  }, []);
 
   const handleCheckout = async (planId: string) => {
     if (!email) {
@@ -128,18 +140,26 @@ export default function PricingPage() {
           </p>
         </div>
 
-        {/* Email input for checkout */}
+        {/* Email — hidden when logged in, shown when logged out */}
         <div className="max-w-md mx-auto mb-10">
-          <label className="block text-sm text-forge-muted mb-2 text-center">
-            Enter your email to get started
-          </label>
-          <input
-            type="email"
-            className="w-full bg-forge-surface border border-forge-border text-forge-text text-sm rounded-xl px-4 py-3 placeholder-forge-muted focus:outline-none focus:border-forge-gold/50 text-center"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          {isLoggedIn ? (
+            <p className="text-center text-sm text-forge-muted">
+              Signed in as <span className="text-forge-gold">{email}</span>
+            </p>
+          ) : (
+            <>
+              <label className="block text-sm text-forge-muted mb-2 text-center">
+                Enter your email to get started
+              </label>
+              <input
+                type="email"
+                className="w-full bg-forge-surface border border-forge-border text-forge-text text-sm rounded-xl px-4 py-3 placeholder-forge-muted focus:outline-none focus:border-forge-gold/50 text-center"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </>
+          )}
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
