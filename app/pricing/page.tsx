@@ -80,8 +80,8 @@ export default function PricingPage() {
   }, []);
 
   const handleCheckout = async (planId: string) => {
-    if (!email) {
-      alert("Please enter your email to continue.");
+    if (!isLoggedIn) {
+      window.location.href = `/auth/login?redirect=/pricing`;
       return;
     }
 
@@ -140,25 +140,19 @@ export default function PricingPage() {
           </p>
         </div>
 
-        {/* Email — hidden when logged in, shown when logged out */}
-        <div className="max-w-md mx-auto mb-10">
+        {/* Auth status */}
+        <div className="max-w-md mx-auto mb-10 text-center">
           {isLoggedIn ? (
-            <p className="text-center text-sm text-forge-muted">
+            <p className="text-sm text-forge-muted">
               Signed in as <span className="text-forge-gold">{email}</span>
             </p>
           ) : (
-            <>
-              <label className="block text-sm text-forge-muted mb-2 text-center">
-                Enter your email to get started
-              </label>
-              <input
-                type="email"
-                className="w-full bg-forge-surface border border-forge-border text-forge-text text-sm rounded-xl px-4 py-3 placeholder-forge-muted focus:outline-none focus:border-forge-gold/50 text-center"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </>
+            <p className="text-sm text-forge-muted">
+              <Link href="/auth/login?redirect=/pricing" className="text-forge-gold hover:underline font-medium">
+                Sign in or create a free account
+              </Link>{" "}
+              to upgrade
+            </p>
           )}
         </div>
 
