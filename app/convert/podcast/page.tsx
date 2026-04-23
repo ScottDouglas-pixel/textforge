@@ -45,10 +45,16 @@ export default function PodcastConverter() {
   const [charCount, setCharCount] = useState(0);
   const [plan, setPlan] = useState<Plan>("free");
   const [conversionsToday, setConversionsToday] = useState(0);
+  const [subscriptionStatus, setSubscriptionStatus] = useState("inactive");
+  const [trialEndsAt, setTrialEndsAt] = useState<string | null>(null);
 
   const limits = PLAN_LIMITS[plan];
   const MAX_FREE_CHARS = limits.max_chars;
   const remaining = limits.conversions_per_day - conversionsToday;
+  const isTrialing = subscriptionStatus === "trialing";
+  const trialDaysLeft = trialEndsAt
+    ? Math.max(0, Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+    : null;
 
   useEffect(() => {
     const supabase = createClient();
@@ -56,13 +62,15 @@ export default function PodcastConverter() {
       if (!user) return;
       const { data } = await supabase
         .from("profiles")
-        .select("plan, conversions_today, last_reset_date")
+        .select("plan, conversions_today, last_reset_date, subscription_status, trial_ends_at")
         .eq("id", user.id)
         .single();
       if (data) {
         setPlan((data.plan as Plan) ?? "free");
         const today = new Date().toISOString().split("T")[0];
         setConversionsToday(data.last_reset_date === today ? data.conversions_today : 0);
+        setSubscriptionStatus(data.subscription_status ?? "inactive");
+        setTrialEndsAt(data.trial_ends_at ?? null);
       }
     });
   }, []);
@@ -150,9 +158,15 @@ export default function PodcastConverter() {
             </div>
           </div>
           <div className="flex gap-3 items-center">
-            <span className="tag text-xs capitalize">
-              {plan} · {remaining}/{limits.conversions_per_day} left today
-            </span>
+            {isTrialing && trialDaysLeft !== null ? (
+              <span className="tag text-xs text-blue-400 border-blue-400/30 bg-blue-400/10">
+                Trial · {trialDaysLeft}d left · {remaining}/{limits.conversions_per_day} today
+              </span>
+            ) : (
+              <span className="tag text-xs capitalize">
+                {plan} · {remaining}/{limits.conversions_per_day} left today
+              </span>
+            )}
             {plan === "free" && (
               <Link href="/pricing?plan=pro" className="btn-gold text-xs px-3 py-1.5">
                 Upgrade

@@ -37,7 +37,13 @@ export async function POST(req: NextRequest) {
       const stripeSubscriptionId = session.subscription as string;
 
       if (email && plan) {
-        // Find user by email and grant plan access
+        // Fetch subscription to get status + trial info
+        const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+        const isTrialing = subscription.status === "trialing";
+        const trialEnd = subscription.trial_end
+          ? new Date(subscription.trial_end * 1000).toISOString()
+          : null;
+
         const { data: profile } = await admin
           .from("profiles")
           .select("id")
@@ -49,9 +55,26 @@ export async function POST(req: NextRequest) {
             plan,
             stripe_customer_id: stripeCustomerId,
             stripe_subscription_id: stripeSubscriptionId,
+            subscription_status: isTrialing ? "trialing" : "active",
+            trial_ends_at: trialEnd,
           }).eq("id", profile.id);
         }
       }
+      break;
+    }
+
+    case "customer.subscription.updated": {
+      const subscription = event.data.object as Stripe.Subscription;
+      const stripeCustomerId = subscription.customer as string;
+      const isTrialing = subscription.status === "trialing";
+      const trialEnd = subscription.trial_end
+        ? new Date(subscription.trial_end * 1000).toISOString()
+        : null;
+
+      await admin.from("profiles").update({
+        subscription_status: isTrialing ? "trialing" : subscription.status,
+        trial_ends_at: trialEnd,
+      }).eq("stripe_customer_id", stripeCustomerId);
       break;
     }
 
@@ -59,10 +82,23 @@ export async function POST(req: NextRequest) {
       const subscription = event.data.object as Stripe.Subscription;
       const stripeCustomerId = subscription.customer as string;
 
-      // Downgrade user to free plan
       await admin.from("profiles").update({
         plan: "free",
+        subscription_status: "canceled",
         stripe_subscription_id: null,
+        trial_ends_at: null,
+      }).eq("stripe_customer_id", stripeCustomerId);
+      break;
+    }
+
+    case "invoice.payment_succeeded": {
+      const invoice = event.data.object as Stripe.Invoice;
+      const stripeCustomerId = invoice.customer as string;
+
+      // Trial converted to paid — mark as active
+      await admin.from("profiles").update({
+        subscription_status: "active",
+        trial_ends_at: null,
       }).eq("stripe_customer_id", stripeCustomerId);
       break;
     }
@@ -71,9 +107,9 @@ export async function POST(req: NextRequest) {
       const invoice = event.data.object as Stripe.Invoice;
       const stripeCustomerId = invoice.customer as string;
 
-      // Downgrade to free on payment failure
       await admin.from("profiles").update({
         plan: "free",
+        subscription_status: "past_due",
       }).eq("stripe_customer_id", stripeCustomerId);
       break;
     }

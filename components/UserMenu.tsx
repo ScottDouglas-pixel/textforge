@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { LogOut, ChevronDown, User } from "lucide-react";
+import { LogOut, ChevronDown, User, Settings } from "lucide-react";
+import Link from "next/link";
 
 export default function UserMenu() {
   const [email, setEmail] = useState<string | null>(null);
@@ -59,9 +60,17 @@ export default function UserMenu() {
             </div>
             <p className="text-sm text-white font-medium truncate">{email}</p>
           </div>
+          <Link
+            href="/settings"
+            onClick={() => setOpen(false)}
+            className="w-full flex items-center gap-2 px-4 py-3 text-sm text-white hover:bg-white/5 transition-colors"
+          >
+            <Settings size={14} className="text-gray-400" />
+            Settings & Billing
+          </Link>
           <button
             onClick={signOut}
-            className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors"
+            className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors border-t border-white/10"
           >
             <LogOut size={14} />
             Sign out
