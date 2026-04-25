@@ -51,7 +51,7 @@ const TESTIMONIALS = [
   {
     name: "Sarah K.",
     role: "Content Marketing Manager",
-    text: "We went from publishing 2 posts/week to 14. TextForge is the only tool that actually gets our tone right.",
+    text: "We went from publishing 2 posts/week to 14. TranscriptToPost is the only tool that actually gets our tone right.",
     stars: 5,
   },
   {
@@ -63,7 +63,7 @@ const TESTIMONIALS = [
   {
     name: "Diana L.",
     role: "Agency Owner",
-    text: "Running 20+ client blogs with 2 people. TextForge is the third team member we never have to pay benefits.",
+    text: "Running 20+ client blogs with 2 people. TranscriptToPost is the third team member we never have to pay benefits.",
     stars: 5,
   },
 ];
@@ -124,7 +124,7 @@ export default function Home() {
             <div className="w-8 h-8 bg-forge-gold rounded-lg flex items-center justify-center">
               <Zap size={16} className="text-forge-bg" />
             </div>
-            <span className="font-display text-xl font-bold text-forge-text">TextForge</span>
+            <span className="font-display text-xl font-bold text-forge-text">TranscriptToPost</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-forge-muted">
             <Link href="#features" className="hover:text-forge-text transition-colors">Features</Link>
@@ -158,7 +158,7 @@ export default function Home() {
           </h1>
 
           <p className="text-forge-muted text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10 stagger-3">
-            Paste your notes, ideas, or raw transcript. TextForge transforms them into{" "}
+            Paste your notes, ideas, or raw transcript. TranscriptToPost transforms them into{" "}
             <strong className="text-forge-text">publish-ready SEO blog posts</strong> and{" "}
             <strong className="text-forge-text">engaging podcast scripts</strong> — in under 10 seconds.
           </p>
@@ -267,7 +267,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <div className="tag inline-flex mb-4">Testimonials</div>
-            <h2 className="font-display text-4xl font-bold">Creators love TextForge</h2>
+            <h2 className="font-display text-4xl font-bold">Creators love TranscriptToPost</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -376,7 +376,7 @@ export default function Home() {
             <div className="w-7 h-7 bg-forge-gold rounded-md flex items-center justify-center">
               <Zap size={13} className="text-forge-bg" />
             </div>
-            <span className="font-display font-bold">TextForge</span>
+            <span className="font-display font-bold">TranscriptToPost</span>
           </div>
           <div className="flex gap-6 text-sm text-forge-muted">
             <Link href="/convert/blog" className="hover:text-forge-gold transition-colors">Blog Writer</Link>
@@ -385,7 +385,7 @@ export default function Home() {
             <Link href="#" className="hover:text-forge-gold transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-forge-gold transition-colors">Terms</Link>
           </div>
-          <p className="text-forge-muted text-xs">© 2024 TextForge. All rights reserved.</p>
+          <p className="text-forge-muted text-xs">© 2024 TranscriptToPost. All rights reserved.</p>
         </div>
       </footer>
     </div>

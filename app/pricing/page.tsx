@@ -11,7 +11,7 @@ const PLANS = [
     name: "Starter",
     price: 0,
     period: "Free forever",
-    desc: "Perfect for trying TextForge",
+    desc: "Perfect for trying TranscriptToPost",
     features: [
       "5 blog conversions / day",
       "5 podcast scripts / day",
@@ -122,7 +122,7 @@ export default function PricingPage() {
             <div className="w-7 h-7 bg-forge-gold rounded-md flex items-center justify-center">
               <Zap size={13} className="text-forge-bg" />
             </div>
-            <span className="font-display font-bold">TextForge Pricing</span>
+            <span className="font-display font-bold">TranscriptToPost Pricing</span>
           </div>
         </div>
       </div>
@@ -246,8 +246,8 @@ export default function PricingPage() {
                 a: "Yes — the free plan gives you 5 conversions per day forever, no credit card needed. Upgrade only when you need more.",
               },
               {
-                q: "What AI model powers TextForge?",
-                a: "TextForge uses Claude by Anthropic — one of the most capable language models for long-form content generation.",
+                q: "What AI model powers TranscriptToPost?",
+                a: "TranscriptToPost uses Claude by Anthropic — one of the most capable language models for long-form content generation.",
               },
               {
                 q: "Can I use the generated content commercially?",

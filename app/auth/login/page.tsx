@@ -60,7 +60,7 @@ function LoginForm() {
           <p className="text-gray-400">
             {isSignUp
               ? "Start generating content in seconds"
-              : "Sign in to access TextForge"}
+              : "Sign in to access TranscriptToPost"}
           </p>
         </div>
 

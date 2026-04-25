@@ -8,8 +8,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 const PLANS: Record<string, { name: string; amount: number; description: string }> = {
-  pro:      { name: "TextForge Pro",      amount: 1900, description: "100 conversions/day, 15,000 char limit" },
-  business: { name: "TextForge Business", amount: 7900, description: "500 conversions/day, 50,000 char limit" },
+  pro:      { name: "TranscriptToPost Pro",      amount: 1900, description: "100 conversions/day, 15,000 char limit" },
+  business: { name: "TranscriptToPost Business", amount: 7900, description: "500 conversions/day, 50,000 char limit" },
 };
 
 export async function POST(req: NextRequest) {

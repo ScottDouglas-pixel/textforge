@@ -366,7 +366,7 @@ Example:
         <div className="mt-8 grid md:grid-cols-3 gap-4">
           {[
             { tip: "💡 Better input = better output", desc: "Include specific facts, stats, or data points for richer content." },
-            { tip: "🎯 Use target keywords", desc: "Adding a keyword helps TextForge optimize H1/H2 tags and density." },
+            { tip: "🎯 Use target keywords", desc: "Adding a keyword helps TranscriptToPost optimize H1/H2 tags and density." },
             { tip: "📋 Works with any format", desc: "Bullet points, transcripts, paragraphs — any input format works." },
           ].map((t) => (
             <div key={t.tip} className="bg-forge-surface/50 border border-forge-border rounded-xl p-4">

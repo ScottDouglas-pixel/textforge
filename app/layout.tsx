@@ -22,13 +22,13 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TextForge – Turn Any Text Into Blogs & Podcasts Instantly",
+  title: "TranscriptToPost – Turn Any Text Into Blogs & Podcasts Instantly",
   description:
     "Transform raw notes, ideas, or topics into polished SEO blog posts and podcast scripts using AI. No writing skills needed.",
   keywords:
     "text to blog, text to podcast, AI blog writer, AI podcast script, content generator, SEO blog generator",
   openGraph: {
-    title: "TextForge – AI Content Transformer",
+    title: "TranscriptToPost – AI Content Transformer",
     description: "Turn any text into SEO blogs and podcast scripts instantly.",
     type: "website",
   },
