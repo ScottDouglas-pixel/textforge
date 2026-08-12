@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -44,6 +45,7 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable}`}>
       <body className="bg-forge-bg text-forge-text font-body antialiased">
         {children}
+        <Analytics />
         <Script
           id="tawk-to"
           strategy="afterInteractive"
